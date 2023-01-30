@@ -10,7 +10,7 @@ def rename_files(directory, pattern, kolvo):
             os.rename(file_path, new_file_path)
 
 
-kolvo = int(input("Введите сколько файлов переименовать: "))
+kolvo = int(input("How many files do you want to rename?: "))
 directory = input("Enter the directory path: ")
 pattern = input("Enter the file renaming pattern (e.g. '{}_new'): ")
 rename_files(directory, pattern, kolvo)
