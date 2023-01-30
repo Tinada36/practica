@@ -1,9 +1,10 @@
 import datetime
+from datetime import timedelta
 import tkinter as tk
 from tkinter import scrolledtext
 import codecs
 
-with codecs.open('data.txt', 'r+', 'utf-8') as f:
+with codecs.open('Kopilka\data.txt', 'r+', 'utf-8') as f:
     ln = f.readline()
     lst = ln.split(', ')
 
@@ -32,9 +33,9 @@ def zapros():
         elif i == len(lst)-1:
             print('HERE')
             client()
-            with codecs.open(f'{poluch}_balans.txt', 'w+', 'utf-8') as file1:
+            with codecs.open(f'Kopilka\{poluch}_balans.txt', 'w+', 'utf-8') as file1:
                 file1.write(str(f'Balans: {balans}'))
-            with codecs.open('data.txt', 'a+', 'utf-8') as ff:
+            with codecs.open('Kopilka\data.txt', 'a+', 'utf-8') as ff:
                 ff.write(str(f', {poluch}'))
             break
 
@@ -59,6 +60,7 @@ def client():
     lbl.place(x=10000, y=10000)
 
 def check_balans():
+    global balans
     txt1.place(x=100, y=75)
     btn.configure(text='Назад', command=client)
     btn.place(x=10, y=10)
@@ -66,11 +68,31 @@ def check_balans():
     btn2.place(x=1000000, y=1000000)
     btn3.place(x=1000000, y=1000000)
     btn4.place(x=1000000, y=1000000)
-    with codecs.open(f'{poluch}_balans.txt', 'r+', 'utf-8') as file:
+    try:
+        local_time = datetime.date.today()
+        fil = codecs.open(f'Kopilka\{poluch}_procent.txt', 'r+', 'utf-8')
+        c = fil.read().split(" ")
+        c2 = str(c[-1]).split('/')
+        if datetime.date(int(c2[2]), int(c2[1]), int(c2[0])) + timedelta(days=30) == local_time:
+            b = int(c[7])*0.5
+            print(b)
+            print(type(b))
+            fff = codecs.open(f'Kopilka\{poluch}_balans.txt', 'r+')
+            a = fff.readline()
+            l = a.split(" ")
+            fff.close()
+            balans = int(l[1]) + int(b) + int(c[7])
+            fl = codecs.open(f'Kopilka\{poluch}_procent.txt', 'r+', 'utf-8')
+            fl.truncate(0)
+            with codecs.open(f'Kopilka\{poluch}_balans.txt', 'w+', 'utf-8') as ffff:
+                ffff.write(str(f'Balans: {balans}'))
+    except FileNotFoundError:
+        pass
+    with codecs.open(f'Kopilka\{poluch}_balans.txt', 'r+', 'utf-8') as file:
         line = file.read()
         txt1.insert('1.0', line)
     try:
-        with codecs.open(f'{poluch}_procent.txt', 'r+', 'utf-8') as f:
+        with codecs.open(f'Kopilka\{poluch}_procent.txt', 'r+', 'utf-8') as f:
             line1 = f.read()
             txt1.insert('1.0', line1)
     except FileNotFoundError:
@@ -102,7 +124,7 @@ def sum_balans():
     txt_ent.place(x=100000, y=100000)
     txt_ent2.place(x=100000, y=100000)
     print(balans)
-    with codecs.open(f'{poluch}_balans.txt', 'w+', 'utf-8') as file:
+    with codecs.open(f'Kopilka\{poluch}_balans.txt', 'w+', 'utf-8') as file:
         file.write(str(f'Balans: {balans}'))
 
 def cash_get():
@@ -122,7 +144,7 @@ def cash_get():
 def check():
     global balans
     vivod = txt_ent1.get()
-    ff = codecs.open(f'{poluch}_balans.txt', 'r+')
+    ff = codecs.open(f'Kopilka\{poluch}_balans.txt', 'r+')
     a = ff.readline()
     l = a.split(" ")
     ff.close()
@@ -131,7 +153,7 @@ def check():
         balans = int(balans) - int(vivod)
         lbl.configure(text="Готово!")
         btn.configure(text="Назад", command=client)
-        with codecs.open(f'{poluch}_balans.txt', 'w+', 'utf-8') as file:
+        with codecs.open(f'Kopilka\{poluch}_balans.txt', 'w+', 'utf-8') as file:
             file.write(str(f'Balans: {balans}'))
         lbl.place(x=260, y=150)
         btn.place(x=260, y=170)
@@ -159,7 +181,7 @@ def check():
         txt.place(x=100000, y=100000)
 
 def procent():
-    lbl.configure(text="Введите сумму для вложения под 50% на 100 дней: ")
+    lbl.configure(text="Введите сумму для вложения под 50% на 30 дней: ")
     txt_ent2.place(x=255, y=150)
     btn.configure(text="Пополнить", command=vlozhenie)
     lbl.place(x=210, y=130)
@@ -174,19 +196,8 @@ def procent():
 def vlozhenie():
     a = txt_ent2.get()
     local_time = datetime.date.today()
-    with codecs.open(f'{poluch}_procent.txt', 'a+', 'utf-8') as ff:
-        ff.write(str(f'\nСумма под процентом 50% на 100 дней: {a} с {local_time.strftime("%m/%d/%Y")}\n'))
-    b = local_time.day + 100
-    if local_time == b:
-        a = a*0,5
-        global balans
-        fff = codecs.open(f'{poluch}_balans.txt', 'r+')
-        a = fff.readline()
-        l = a.split(" ")
-        fff.close()
-        balans = int(l[1]) + a
-        with codecs.open(f'{poluch}_balans.txt', 'w+', 'utf-8') as ffff:
-            ffff.write(str(f'Balans: {balans}'))
+    with codecs.open(f'Kopilka\{poluch}_procent.txt', 'a+', 'utf-8') as ff:
+        ff.write(str(f'Сумма под процентом 50% на 30 дней: {a} с {local_time.strftime("%d/%m/%Y")}\n'))
     lbl.configure(text="Готово!")
     btn.configure(text="Назад", command=client)
     lbl.place(x=250, y=130)
