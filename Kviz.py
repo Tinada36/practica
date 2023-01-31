@@ -17,7 +17,7 @@ def question():
     b = txt.get()
     fl = codecs.open(f"{b}_test.txt", "r+", "utf-8")
     txt.delete(0, tk.END)
-    line = fl.read().replace("\r\n", "  ").split("  ")
+    line = fl.read().replace("\n", "  ").split("  ")
     print(line)
     fl.close()
     zamena()
