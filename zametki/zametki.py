@@ -18,7 +18,7 @@ def zapros():
             break
         elif i == len(lst)-1:
             print('HERE')
-            with codecs.open(f'{poluch}_polz.txt', 'w+', 'utf-8') as file1:
+            with codecs.open(f'zametki\{poluch}_polz.txt', 'w+', 'utf-8') as file1:
                 file1.write("Заметки:\n")
             with codecs.open('zametki\data.txt', 'a+', 'utf-8') as ff:
                 ff.write(str(f', {poluch}'))
@@ -30,7 +30,7 @@ def client():
     btn.configure(text='Принять', command=messange)
     txt.delete(0, tk.END)
     txt.configure(width=50)
-    with codecs.open(f"{poluch}_polz.txt", "r+", "utf-8") as file:
+    with codecs.open(f"zametki\{poluch}_polz.txt", "r+", "utf-8") as file:
         line = file.read()
         txt1.insert('1.0', line)
     txt.place(x=115, y=90) 
@@ -41,7 +41,7 @@ def client():
 def messange():
     zametka = txt.get()
     txt.delete(0, tk.END)
-    with codecs.open(f"{poluch}_polz.txt", "a+", "utf-8") as file:
+    with codecs.open(f"zametki\{poluch}_polz.txt", "a+", "utf-8") as file:
         file.write(f"{zametka}\n")
         txt1.insert(tk.END, f"{zametka}\n")
 
