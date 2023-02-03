@@ -1,3 +1,6 @@
+#Tinada
+#gruzin_apelsin
+
 import requests
 import fake_useragent
 from bs4 import BeautifulSoup as pars
