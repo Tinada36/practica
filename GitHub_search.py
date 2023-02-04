@@ -34,45 +34,54 @@ elif search3 == 6:
     url = f"https://github.com/search?o=desc&q={search}&s=updated&type=Repositories"
 elif search3 == 7:
     url = f"https://github.com/search?o=asc&q={search}&s=updated&type=Repositories"
-r = s.get(url, headers=header)
-time.sleep(t)
-soup = BeautifulSoup(r.text, "html.parser")
-languages = soup.find_all("a", class_="v-align-middle")
-lst = [i.text for i in languages]
+def zapros():
+    global lst
+    r = s.get(url, headers=header)
+    time.sleep(t)
+    soup = BeautifulSoup(r.text, "html.parser")
+    languages = soup.find_all("a", class_="v-align-middle")
+    lst = [i.text for i in languages]
 href = []
-try:
-    for i in range(search2):
-        url_rep = f'https://github.com/{lst[i]}'
-        r2 = s.get(url_rep, headers=header)
-        print(r2.status_code)
-        href.append(lst[i])
-        time.sleep(t)
-        soup1 = BeautifulSoup(r2.text, "html.parser")
-        for g in soup1.find_all("span", class_="color-fg-default text-bold mr-1"):
-            href.append(g.text)
-        for k in soup1.find_all("a", title="README.md"):
-            otv = 'https://github.com'
-            href.append(otv + k.get('href'))
-except IndexError:
-    print("На странице меньше результатов чем вы запросили")
-try:
-    for i in range(len(href)):
-        with open("pass_url.txt", "a+") as file:
-            for g in range(len(lst)):
-                if href[i] == lst[g]:
-                    if str(href[i+1]).endswith("README.md") == True:
-                        del href[i]
-                        del href[i]
-                        file.write("\nК сожалению не все результаты попали под фильтр интересующих репозиториев\n")
-            if str(href[i]).endswith('README.md'):
-                file.write(str(href[i])+'\n')
-            else:
-                file.write(f'{str(href[i])}, ')
-except IndexError:
-    pass
+def pars():
+    try:
+        for i in range(search2):
+            url_rep = f'https://github.com/{lst[i]}'
+            r2 = s.get(url_rep, headers=header)
+            print(r2.status_code)
+            href.append(lst[i])
+            time.sleep(t)
+            soup1 = BeautifulSoup(r2.text, "html.parser")
+            for g in soup1.find_all("span", class_="color-fg-default text-bold mr-1"):
+                href.append(g.text)
+            for k in soup1.find_all("a", title="README.md"):
+                otv = 'https://github.com'
+                href.append(otv + k.get('href'))
+    except IndexError:
+        print("На странице меньше результатов чем вы запросили")
+def otbor():
+    try:
+        for i in range(len(href)):
+            with open("pass_url.txt", "a+") as file:
+                for g in range(len(lst)):
+                    if href[i] == lst[g]:
+                        if str(href[i+1]).endswith("README.md") == True:
+                            del href[i]
+                            del href[i]
+                            file.write("\nК сожалению не все результаты попали под фильтр интересующих репозиториев\n")
+                if str(href[i]).endswith('README.md'):
+                    file.write(str(href[i])+'\n')
+                else:
+                    file.write(f'{str(href[i])}, ')
+    except IndexError:
+        pass
+def show():
+    with open('pass_url.txt', 'r+') as f:
+        line = f.readlines()
+    for i in range(len(line)):
+        print(line[i])
+    os.remove("pass_url.txt")
 
-with open('pass_url.txt', 'r+') as f:
-	line = f.readlines()
-for i in range(len(line)):
-    print(line[i])
-os.remove("pass_url.txt")
+print(zapros())
+print(pars())
+print(otbor())
+print(show())
