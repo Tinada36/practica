@@ -1,15 +1,14 @@
 import tkinter as tk
 from tkinter import scrolledtext
 import codecs
-import time
 
 def vopros():
   win.wm_resizable(0, 0)
   lbl.configure(text="Введите категорию теста")
   btn.configure(text="Принять", command=question)
-  txt.place(x=120, y=200)
-  lbl.place(x=220, y=180)
-  btn.place(x=260, y=230)
+  txt.place(x=160, y=200)
+  lbl.place(x=280, y=180)
+  btn.place(x=340, y=230)
 
 def question():
   global line, b
@@ -58,9 +57,9 @@ def end_test():
   fl.close()
   lbl.configure(text=f"Ваш результат: {chet}/{len(dlinna)}")
   btn.configure(text="Завершить", command=zakritie)
-  lbl.place(x=220, y=200)
+  lbl.place(x=300, y=200)
   txt.place(x=10000, y=10000)
-  btn.place(x=250, y=250)
+  btn.place(x=320, y=250)
 
 def zakritie():
   win.destroy()
@@ -72,10 +71,10 @@ def admin():
   txt.configure(width=50)
   btn2.configure(text="Просмотреть результаты", command=check_result)
   txt1.delete('1.0', tk.END)
-  lbl.place(x=230, y=80)
-  btn.place(x=245, y=150)
-  btn1.place(x=255, y=200)
-  btn2.place(x=225, y=250)
+  lbl.place(x=300, y=80)
+  btn.place(x=320, y=200)
+  btn1.place(x=330, y=250)
+  btn2.place(x=300, y=300)
   txt.place(x=10000, y=10000)
   txt1.place(x=10000, y=10000)
 
@@ -145,15 +144,15 @@ win = tk.Tk()
 chet = 0
 i = 0
 win.title("Квиз-тест")
-win.geometry('600x400')
+win.geometry('800x600')
 win['bg'] = "#CD5C5C"
-lbl = tk.Label(win, font=('arial',9,'bold'), bg='#CD5C5C')
-lbl1 = tk.Label(win, font=('arial',9,'bold'), bg='#CD5C5C')
-txt = tk.Entry(win, width=50, justify="center", font=('arial',9,'bold'))
-txt1 = scrolledtext.ScrolledText(win, height=17, width=55, fg='#0000FF', font=('arial',9,'bold'))
-btn = tk.Button(win, text="Начать", bg='#808080', fg="#FFFF00", font=('arial',9,'bold'), command=vopros)
-btn1 = tk.Button(win, bg='#CD5C5C', fg="#FFFF00", font=('arial',9,'bold'), command=admin)
-btn2 = tk.Button(win, bg='#808080', fg="#FFFF00", font=('arial',9,'bold'))
-btn.place(x=260, y=150)
+lbl = tk.Label(win, font=('arial',12,'bold'), bg='#CD5C5C')
+lbl1 = tk.Label(win, font=('arial',12,'bold'), bg='#CD5C5C')
+txt = tk.Entry(win, width=50, justify="center", font=('arial',12,'bold'))
+txt1 = scrolledtext.ScrolledText(win, height=17, width=55, fg='#0000FF', font=('arial',12,'bold'))
+btn = tk.Button(win, text="Начать", bg='#808080', fg="#FFFF00", font=('arial',12,'bold'), command=vopros)
+btn1 = tk.Button(win, bg='#CD5C5C', fg="#FFFF00", font=('arial',12,'bold'), command=admin)
+btn2 = tk.Button(win, bg='#808080', fg="#FFFF00", font=('arial',12,'bold'))
+btn.place(x=350, y=250)
 btn1.place(x=1000, y=760)
 win.mainloop()
