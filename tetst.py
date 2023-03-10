@@ -28,9 +28,9 @@ class Parse():
         self.mas = []
         for i in self.soup.find_all(contener, class_= category):
             self.mas.append(i.get('src'))
+        print(self.mas)
         for i in range(len(self.mas)):
             with open(f'parser_img{i+1}.jpg', 'wb+') as self.file:
-                for j in self.mas:
-                    self.img = requests.get(url=j)
+                    self.img = requests.get(url=self.mas[i])
                     self.file.write(self.img.content)
 parse = Parse()
