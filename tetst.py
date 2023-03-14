@@ -8,8 +8,9 @@ class Parse():
         user = {
             'user-agent': header
         }
+        self.url = url
         self.s = requests.Session()
-        self.res = self.s.get(url=url, headers=user)
+        self.res = self.s.get(url=self.url, headers=user)
 
     def parsing_text(self, contener, category) -> str:
         self.soup = bs(self.res.text, "html.parser")
@@ -21,16 +22,19 @@ class Parse():
         self.soup = bs(self.res.text, "html.parser")
         with codecs.open('parser_site.txt', 'a+', 'utf-8') as self.file:
             for i in self.soup.find_all(contener, class_= category):
-                self.file.write(str(i.get('href')) + '\n')
+                self.file.write(self.url + str(i.get('href')) + '\n')
     
-    def parsing_img(self, contener, category) -> bytes:
+    def parsing_img(self, category) -> bytes:
         self.soup = bs(self.res.text, "html.parser")
         self.mas = []
-        for i in self.soup.find_all(contener, class_= category):
+        for i in self.soup.find_all('img', class_= category):
             self.mas.append(i.get('src'))
         print(self.mas)
         for i in range(len(self.mas)):
             with open(f'parser_img{i+1}.jpg', 'wb+') as self.file:
                     self.img = requests.get(url=self.mas[i])
                     self.file.write(self.img.content)
+    def parsing_video(self) -> bytes:
+        pass
+
 parse = Parse()
