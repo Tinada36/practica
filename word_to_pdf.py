@@ -24,10 +24,11 @@ def center_window(window):
 root = tk.Tk()
 root.title("Конвертер ворд в пдф")
 root.geometry('500x200')
+root['bg'] = 'gray'
 root.wm_resizable(0, 0)
 center_window(root)
 
-lbl = tk.Label(root, text="Введи путь к файлу", font=('Arial', 9, 'bold'))
+lbl = tk.Label(root, text="Введи путь к файлу", font=('Arial', 9, 'bold'), bg='gray')
 txt = tk.Entry(root, width=37, justify="center", font=('Arial', 9, 'bold'))
 btn = tk.Button(root, text="Конвертировать", command=conv)
 
