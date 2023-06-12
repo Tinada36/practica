@@ -21,7 +21,6 @@ def center_window(window):
     y = (window.winfo_screenheight() - height) // 2
     window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 
-
 root = tk.Tk()
 root.title("Конвертер ворд в пдф")
 root.geometry('500x200')
