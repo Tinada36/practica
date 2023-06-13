@@ -10,6 +10,8 @@ def conv():
         convert(fr"{path_list[0]}.{path_list[1]}", fr"{path_list[0]}.pdf")
         lbl.configure(text="Успешно!")
         lbl.place(x=220, y=45)
+        txt.delete(0, tk.END)
+        
     except Exception:
         lbl.configure(text="Ошибка конвертации!!!") 
 
@@ -36,4 +38,4 @@ lbl.place(x=190, y=45)
 txt.place(x=120, y=80)
 btn.place(x=200, y=115)
 
-root.mainloop()
+root.mainloop() #"C:\Users\vladt\OneDrive\Рабочий стол\тестовый.docx"
