@@ -38,4 +38,4 @@ lbl.place(x=190, y=45)
 txt.place(x=120, y=80)
 btn.place(x=200, y=115)
 
-root.mainloop() #"C:\Users\vladt\OneDrive\Рабочий стол\тестовый.docx"
+root.mainloop()
